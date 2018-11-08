@@ -1,0 +1,20 @@
+# Public facing API, this is how we give access to our DB
+# to our front end - logic for these is in the resolvers folder
+
+## Prisma uses this comment syntax to get types from other files
+
+# import * from './generated/prisma.graphql';
+
+type Mutation {
+  createItem(
+    title: String
+    description: String
+    image: String
+    largeImage: String
+    price: Int!
+  ): Item!
+}
+
+type Query {
+  items: [Item]!
+}
