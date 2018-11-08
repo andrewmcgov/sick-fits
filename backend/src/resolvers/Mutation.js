@@ -1,3 +1,19 @@
-const mutations = {};
+const Mutations = {
+  async createItem(parent, args, ctx, info) {
+    // TODO: Check if thye are logged in
 
-module.exports = mutations;
+    // the DB is on ctx because we added it in createServer.js
+    const item = await ctx.db.mutation.createItem(
+      {
+        data: {
+          ...args
+        }
+      },
+      info
+    );
+
+    return item;
+  }
+};
+
+module.exports = Mutations;
