@@ -5,7 +5,8 @@ const Query = {
   // You can forward it right to Prisma using forwardTo
   // Instead of writing it all out - great for queries that need no auth, etc
   items: forwardTo("db"),
-  item: forwardTo("db")
+  item: forwardTo("db"),
+  itemsConnection: forwardTo("db")
 };
 
 module.exports = Query;
