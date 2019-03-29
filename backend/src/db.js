@@ -1,4 +1,4 @@
-// This file connects to the remove Prisma DB
+// This file connects to the Prisma DB
 // and gives us the ability to query it with JS
 
 const { Prisma } = require("prisma-binding");

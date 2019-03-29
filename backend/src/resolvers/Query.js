@@ -1,4 +1,5 @@
 const { forwardTo } = require('prisma-binding');
+const { hasPermission } = require('../utils');
 
 const Query = {
   // anytime a query is the exact same on in both Yoga and Prisma
@@ -18,6 +19,17 @@ const Query = {
       },
       info
     );
+  },
+  async users(parent, args, ctx, info) {
+    // Check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in!');
+    }
+    // Check if the user has permissions to query all the users
+    hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
+
+    // If they do, query the users!
+    return ctx.db.query.users({}, info);
   }
 };
 
