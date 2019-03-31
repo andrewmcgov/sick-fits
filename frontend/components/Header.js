@@ -1,7 +1,9 @@
-import Link from "next/link";
-import styled from "styled-components";
-import Router from "next/router";
-import NProgress from "nprogress";
+import Link from 'next/link';
+import styled from 'styled-components';
+import Router from 'next/router';
+import NProgress from 'nprogress';
+
+import Cart from './Cart';
 
 // NProgress helps us show a progress bar on page router events
 // http://ricostacruz.com/nprogress/
@@ -15,7 +17,7 @@ Router.onRouteChangeError = () => {
   NProgress.done();
 };
 
-import Nav from "./Nav";
+import Nav from './Nav';
 
 // Styled components, can be written just like normal css in the template strings
 const Logo = styled.h1`
@@ -69,7 +71,7 @@ const Header = () => (
     <div className="sub-bar">
       <p>Search</p>
     </div>
-    <div>Cart</div>
+    <Cart />
   </StyledHeader>
 );
 

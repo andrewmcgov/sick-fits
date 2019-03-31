@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Route from "next/router";
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import Route from 'next/router';
 
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
-import formatMoney from "../lib/formatMoney";
-import Router from "next/router";
+import Form from './styles/Form';
+import Error from './ErrorMessage';
+import formatMoney from '../lib/formatMoney';
+import Router from 'next/router';
 
 const CREATE_ITEM_MUTATION = gql`
   mutation CREATE_ITEM_MUTATION(
@@ -30,30 +30,38 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component {
   state = {
-    title: "",
-    description: "",
-    image: "",
-    largeImage: "",
+    title: '',
+    description: '',
+    image: '',
+    largeImage: '',
     price: 0
   };
 
   handleChange = e => {
     const { name, type, value } = e.target;
-    const val = type === "number" ? parseFloat(value) : value;
+    const val = type === 'number' ? parseFloat(value) : value;
     this.setState({ [name]: val });
   };
 
   uploadFile = async e => {
-    console.log("uploading File...");
+    console.log('uploading File...');
     const files = e.target.files;
+    // If there is no file, skip the upload and empty the image state
+    if (files.length === 0) {
+      this.setState({
+        image: 'file.secure_url',
+        largeImage: 'file.eager[0].secure_url'
+      });
+      return;
+    }
     const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "sickfits");
+    data.append('file', files[0]);
+    data.append('upload_preset', 'sickfits');
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dlmkq8soe/image/upload",
+      'https://api.cloudinary.com/v1_1/dlmkq8soe/image/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: data
       }
     );
@@ -78,7 +86,7 @@ class CreateItem extends Component {
               // Change to the single item page
               console.log(res);
               Router.push({
-                pathname: "/item",
+                pathname: '/item',
                 query: { id: res.data.createItem.id }
               });
             }}
@@ -87,7 +95,7 @@ class CreateItem extends Component {
             {/* The fieldset lets us disablet the whole form based on Apollo values */}
             <fieldset disabled={loading} aria-busy={loading}>
               <label htmlFor="file">
-                Title
+                Image
                 <input
                   type="file"
                   id="file"
