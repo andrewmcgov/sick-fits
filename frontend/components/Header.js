@@ -4,6 +4,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 
 import Cart from './Cart';
+import Search from './Search';
 
 // NProgress helps us show a progress bar on page router events
 // http://ricostacruz.com/nprogress/
@@ -69,7 +70,7 @@ const Header = () => (
       <Nav />
     </div>
     <div className="sub-bar">
-      <p>Search</p>
+      <Search />
     </div>
     <Cart />
   </StyledHeader>
