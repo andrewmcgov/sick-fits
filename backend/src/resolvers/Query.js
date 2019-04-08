@@ -30,6 +30,46 @@ const Query = {
 
     // If they do, query the users!
     return ctx.db.query.users({}, info);
+  },
+  async order(parent, args, ctx, info) {
+    console.log(ctx.request.userId);
+    // make sure they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You are not logged in!');
+    }
+    // Query the current order
+    const order = await ctx.db.query.order(
+      {
+        where: { id: args.id }
+      },
+      info
+    );
+    // Check if they have perissions to see this order
+    const ownsOrder = order.user.id === ctx.request.userId;
+    const hasPermissionsToSeeOrder = ctx.request.user.permissions.includes(
+      'ADMIN'
+    );
+    if (!ownsOrder && !hasPermission) {
+      throw new Error('You shal not pass!');
+    }
+    // Return the order
+    return order;
+  },
+  async orders(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+    // make sure they are logged in
+    if (!userId) {
+      throw new Error('You are not logged in!');
+    }
+    // Query the database for the user's orders
+    return await ctx.db.query.orders(
+      {
+        where: {
+          user: { id: userId }
+        }
+      },
+      info
+    );
   }
 };
 
